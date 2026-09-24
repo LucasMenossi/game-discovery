@@ -11,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RawgApiError } from "@/lib/rawg/client";
 import { getGame } from "@/lib/rawg/games";
 import { getEnglishDescription } from "@/lib/formatters";
+import { RelatedGamesSkeleton } from "@/components/games/RelatedGamesSkeleton";
+import { RelatedGames } from "@/components/games/RelatedGames";
 
 type GameDetailsPageProps = {
   params: Promise<{
@@ -173,6 +175,10 @@ export default async function GameDetailsPage({
 
       <Suspense fallback={<GameMediaSkeleton />}>
         <GameMedia gameId={game.id} />
+      </Suspense>
+
+      <Suspense fallback={<RelatedGamesSkeleton />}>
+        <RelatedGames gameId={game.id} />
       </Suspense>
 
       <section className="mt-10 border-t pt-8">

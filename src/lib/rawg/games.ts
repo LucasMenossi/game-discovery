@@ -103,3 +103,15 @@ export function getGame(slug: string) {
     },
   );
 }
+
+export function getGameSeries(gameId: number) {
+  return rawgFetch<GamesResponse>(
+    `/games/${gameId}/game-series`,
+    {
+      page_size: 6,
+    },
+    {
+      revalidate: 300,
+    },
+  );
+}
