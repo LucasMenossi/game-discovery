@@ -39,10 +39,23 @@ export type GameDetails = {
   metacritic: number | null;
   website: string | null;
 
+  esrb_rating: {
+    id: number;
+    name: string;
+    slug: string;
+  } | null;
+
   genres: {
     id: number;
     name: string;
     slug: string;
+  }[];
+
+  tags: {
+    id: number;
+    name: string;
+    slug: string;
+    language: string;
   }[];
 
   developers: {

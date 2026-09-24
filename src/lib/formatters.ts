@@ -1,3 +1,8 @@
 export function getEnglishDescription(description: string) {
-  return description.split("\nEspañol")[0].trim();
+  return description
+    .split(/\r?\nEspañol\r?\n/)[0]
+    .trim()
+    .split(/\r?\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
 }

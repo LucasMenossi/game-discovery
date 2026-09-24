@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
+
+import { ThemeProvider } from "@/providers/ThemeProvider";
+
 import "./globals.css";
+import { Header } from "@/components/Header";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -22,22 +26,31 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
-        <div className="flex-1">{children}</div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <div className="flex-1">{children}</div>
 
-        <footer className="border-t px-6 py-6 text-center text-sm text-gray-500">
-          Data and images provided by{" "}
-          <a
-            href="https://rawg.io"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-gray-700"
-          >
-            RAWG
-          </a>
-          .
-        </footer>
+          <footer className="border-t px-6 py-6 text-center text-sm text-gray-500">
+            Data and images provided by{" "}
+            <a
+              href="https://rawg.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-gray-700"
+            >
+              RAWG
+            </a>
+            .
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );
