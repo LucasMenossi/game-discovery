@@ -2,6 +2,12 @@ import { getEnglishDescription } from "@/lib/formatters";
 import { getGame } from "@/lib/rawg/games";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { getGameScreenshots } from "@/lib/rawg/screenshots";
+import { GameScreenshots } from "@/components/games/GameScreenshots";
+import { getGameMovies } from "@/lib/rawg/movies";
+import { GameTrailer } from "@/components/games/GameTrailer";
+import { RawgApiError } from "@/lib/rawg/client";
+import { notFound } from "next/navigation";
 
 type GameDetailsPageProps = {
   params: Promise<{
@@ -9,12 +15,24 @@ type GameDetailsPageProps = {
   }>;
 };
 
+async function getGameOrNotFound(slug: string) {
+  try {
+    return await getGame(slug);
+  } catch (error) {
+    if (error instanceof RawgApiError && error.status === 404) {
+      notFound();
+    }
+
+    throw error;
+  }
+}
+
 export async function generateMetadata({
   params,
 }: GameDetailsPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const game = await getGame(slug);
+  const game = await getGameOrNotFound(slug);
 
   return {
     title: `${game.name} | Game Discovery`,
@@ -45,7 +63,12 @@ export default async function GameDetailsPage({
 }: GameDetailsPageProps) {
   const { slug } = await params;
 
-  const game = await getGame(slug);
+  const game = await getGameOrNotFound(slug);
+
+  const [screenshots, movies] = await Promise.all([
+    getGameScreenshots(game.id),
+    getGameMovies(game.id),
+  ]);
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
@@ -97,6 +120,10 @@ export default async function GameDetailsPage({
       <p className="mt-8 whitespace-pre-line text-gray-700">
         {getEnglishDescription(game.description_raw)}
       </p>
+
+      <GameScreenshots screenshots={screenshots.results} />
+
+      {movies.results.length > 0 && <GameTrailer movie={movies.results[0]} />}
 
       <div className="mt-10 grid gap-8 sm:grid-cols-2">
         <section>
