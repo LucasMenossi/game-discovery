@@ -40,7 +40,8 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
                 alt="Game screenshot"
                 width={screenshot.width}
                 height={screenshot.height}
-                className="w-full object-cover transition-transform hover:scale-105"
+                sizes="(min-width: 640px) 50vw, 100vw"
+                className="w-full object-cover"
               />
             </button>
           ))}

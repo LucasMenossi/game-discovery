@@ -36,6 +36,7 @@ export function GameTrailer({ movie }: GameTrailerProps) {
               alt={movie.name}
               width={1280}
               height={720}
+              sizes="(min-width: 1024px) 1024px, 100vw"
               className="aspect-video w-full object-cover"
             />
 

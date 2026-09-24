@@ -2,12 +2,11 @@ import { getEnglishDescription } from "@/lib/formatters";
 import { getGame } from "@/lib/rawg/games";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { getGameScreenshots } from "@/lib/rawg/screenshots";
-import { GameScreenshots } from "@/components/games/GameScreenshots";
-import { getGameMovies } from "@/lib/rawg/movies";
-import { GameTrailer } from "@/components/games/GameTrailer";
 import { RawgApiError } from "@/lib/rawg/client";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { GameMedia } from "@/components/games/GameMedia";
+import { GameMediaSkeleton } from "@/components/games/GameMediaSkeleton";
 
 type GameDetailsPageProps = {
   params: Promise<{
@@ -65,11 +64,6 @@ export default async function GameDetailsPage({
 
   const game = await getGameOrNotFound(slug);
 
-  const [screenshots, movies] = await Promise.all([
-    getGameScreenshots(game.id),
-    getGameMovies(game.id),
-  ]);
-
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
       <h1 className="text-4xl font-bold">{game.name}</h1>
@@ -81,7 +75,8 @@ export default async function GameDetailsPage({
           className="mt-6 aspect-video w-full rounded-lg object-cover"
           width={640}
           height={360}
-          loading="eager"
+          sizes="(min-width: 1024px) 1024px, 100vw"
+          priority
         />
       )}
 
@@ -121,9 +116,9 @@ export default async function GameDetailsPage({
         {getEnglishDescription(game.description_raw)}
       </p>
 
-      <GameScreenshots screenshots={screenshots.results} />
-
-      {movies.results.length > 0 && <GameTrailer movie={movies.results[0]} />}
+      <Suspense fallback={<GameMediaSkeleton />}>
+        <GameMedia gameId={game.id} />
+      </Suspense>
 
       <div className="mt-10 grid gap-8 sm:grid-cols-2">
         <section>
