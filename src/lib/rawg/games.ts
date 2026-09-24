@@ -37,6 +37,33 @@ export type GameDetails = {
   background_image: string | null;
   rating: number;
   metacritic: number | null;
+  website: string | null;
+
+  genres: {
+    id: number;
+    name: string;
+    slug: string;
+  }[];
+
+  developers: {
+    id: number;
+    name: string;
+    slug: string;
+  }[];
+
+  publishers: {
+    id: number;
+    name: string;
+    slug: string;
+  }[];
+
+  platforms: {
+    platform: {
+      id: number;
+      name: string;
+      slug: string;
+    };
+  }[];
 };
 
 export const GAMES_PAGE_SIZE = 10;
