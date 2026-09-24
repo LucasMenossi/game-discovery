@@ -14,9 +14,6 @@ export async function GameMedia({ gameId }: GameMediaProps) {
     getGameMovies(gameId),
   ]);
 
-  console.log("screenshots", screenshots);
-  console.log("movie", movies);
-
   return (
     <>
       <GameScreenshots screenshots={screenshots.results} />

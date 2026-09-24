@@ -5,6 +5,7 @@ import { getPlatforms } from "@/lib/rawg/platforms";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import { GamesView } from "@/components/games/GamesView";
+import { AppBreadcrumb } from "@/components/AppBreadCrumb";
 
 type GamesPageProps = {
   searchParams: Promise<{
@@ -100,6 +101,11 @@ export default async function GamesPage({ searchParams }: GamesPageProps) {
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-10">
+      <div className="mb-8">
+        <AppBreadcrumb
+          items={[{ label: "Home", href: "/" }, { label: "Games" }]}
+        />
+      </div>
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Discover games</h1>
 

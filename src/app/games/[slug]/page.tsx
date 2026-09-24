@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Suspense } from "react";
 import { Star } from "lucide-react";
+import { AppBreadcrumb } from "@/components/AppBreadCrumb";
 
 type GameDetailsPageProps = {
   params: Promise<{
@@ -65,6 +66,15 @@ export default async function GameDetailsPage({
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
+      <div className="mb-8">
+        <AppBreadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Games", href: "/games" },
+            { label: game.name },
+          ]}
+        />
+      </div>
       <h1 className="text-4xl font-bold tracking-tight">{game.name}</h1>
 
       {game.background_image && (

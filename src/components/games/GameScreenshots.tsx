@@ -22,6 +22,10 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
     return null;
   }
 
+  const handleClose = () => {
+    setSelectedScreenshot(null);
+  };
+
   return (
     <>
       <section className="mt-10">
@@ -42,7 +46,7 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
                 width={screenshot.width}
                 height={screenshot.height}
                 sizes="(min-width: 640px) 50vw, 100vw"
-                className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                className="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             </button>
           ))}
@@ -54,11 +58,20 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
           role="dialog"
           aria-modal="true"
           aria-label="Screenshot preview"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-6"
-          onClick={() => setSelectedScreenshot(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 sm:p-6"
+          onClick={handleClose}
         >
+          <button
+            type="button"
+            aria-label="Close screenshot"
+            onClick={handleClose}
+            className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-black/70 text-white transition hover:bg-black/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <X className="size-5" />
+          </button>
+
           <div
-            className="relative max-h-full max-w-6xl"
+            className="max-h-[90vh] max-w-[90vw]"
             onClick={(event) => event.stopPropagation()}
           >
             <Image
@@ -66,17 +79,10 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
               alt="Game screenshot"
               width={selectedScreenshot.width}
               height={selectedScreenshot.height}
-              className="max-h-[90vh] w-auto rounded-lg object-contain"
+              priority
+              sizes="90vw"
+              className="h-auto max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
             />
-
-            <button
-              type="button"
-              aria-label="Close screenshot"
-              onClick={() => setSelectedScreenshot(null)}
-              className="absolute right-3 top-3 flex size-9 items-center justify-center rounded-full bg-black/70 text-white transition hover:bg-black/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            >
-              <X className="size-5" />
-            </button>
           </div>
         </div>
       )}
