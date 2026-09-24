@@ -1,4 +1,4 @@
-import { rawgFetch } from "./client";
+import { RAWG_CACHE, rawgFetch } from "./client";
 
 export type GameScreenshot = {
   id: number;
@@ -20,7 +20,7 @@ export function getGameScreenshots(gameId: number) {
     `/games/${gameId}/screenshots`,
     {},
     {
-      revalidate: 300,
+      revalidate: RAWG_CACHE.dynamic,
     },
   );
 }

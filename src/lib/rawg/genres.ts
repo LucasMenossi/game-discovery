@@ -1,4 +1,4 @@
-import { rawgFetch } from "./client";
+import { RAWG_CACHE, rawgFetch } from "./client";
 
 export type Genre = {
   id: number;
@@ -18,7 +18,7 @@ export function getGenres() {
       page_size: 50,
     },
     {
-      revalidate: 3600,
+      revalidate: RAWG_CACHE.stable,
     },
   );
 }

@@ -1,4 +1,4 @@
-import { rawgFetch } from "./client";
+import { RAWG_CACHE, rawgFetch } from "./client";
 
 export type GameMovie = {
   id: number;
@@ -22,7 +22,7 @@ export function getGameMovies(gameId: number) {
     `/games/${gameId}/movies`,
     {},
     {
-      revalidate: 300,
+      revalidate: RAWG_CACHE.dynamic,
     },
   );
 }

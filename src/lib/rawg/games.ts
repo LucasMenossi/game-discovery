@@ -1,4 +1,4 @@
-import { rawgFetch } from "./client";
+import { RAWG_CACHE, rawgFetch } from "./client";
 
 type GetGamesParams = {
   page?: number;
@@ -89,7 +89,7 @@ export function getGames(params: GetGamesParams = {}) {
       ...params,
     },
     {
-      revalidate: 300,
+      revalidate: RAWG_CACHE.dynamic,
     },
   );
 }
@@ -99,7 +99,7 @@ export function getGame(slug: string) {
     `/games/${slug}`,
     {},
     {
-      revalidate: 300,
+      revalidate: RAWG_CACHE.dynamic,
     },
   );
 }
@@ -111,7 +111,7 @@ export function getGameSeries(gameId: number) {
       page_size: 6,
     },
     {
-      revalidate: 300,
+      revalidate: RAWG_CACHE.dynamic,
     },
   );
 }

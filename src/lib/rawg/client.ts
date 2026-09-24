@@ -1,5 +1,10 @@
 const RAWG_API_URL = "https://api.rawg.io/api";
 
+export const RAWG_CACHE = {
+  dynamic: 300,
+  stable: 3600,
+} as const;
+
 export class RawgApiError extends Error {
   status: number;
 
