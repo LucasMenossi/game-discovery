@@ -1,14 +1,10 @@
-import { GameGenreFilter } from "@/components/games/GameGenreFilter";
-import { GameSearch } from "@/components/games/GameSearch";
-import { GameSort } from "@/components/games/GameSort";
-import { GameCard } from "@/components/games/GameCard";
 import { GamePagination } from "@/components/games/GamePagination";
 import { GAMES_PAGE_SIZE, getGames } from "@/lib/rawg/games";
 import { getGenres } from "@/lib/rawg/genres";
-import { GamePlatformFilter } from "@/components/games/GamePlatformFilter";
 import { getPlatforms } from "@/lib/rawg/platforms";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
+import { GamesView } from "@/components/games/GamesView";
 
 type GamesPageProps = {
   searchParams: Promise<{
@@ -104,21 +100,20 @@ export default async function GamesPage({ searchParams }: GamesPageProps) {
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-10">
-      <h1 className="mb-8 text-3xl font-bold">Games</h1>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">Discover games</h1>
 
-      <GameSearch />
-
-      <div className="mb-8 flex flex-wrap gap-3">
-        <GameGenreFilter genres={genres.results} />
-        <GamePlatformFilter platforms={platforms.results} />
-        <GameSort />
+        <p className="mt-2 text-muted-foreground">
+          Explore games by genre, platform, rating, and more.
+        </p>
       </div>
 
-      <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {data.results.map((game) => (
-          <GameCard key={game.id} game={game} />
-        ))}
-      </section>
+      <GamesView
+        games={data.results}
+        count={data.count}
+        genres={genres.results}
+        platforms={platforms.results}
+      />
 
       <GamePagination currentPage={currentPage} totalPages={totalPages} />
     </main>

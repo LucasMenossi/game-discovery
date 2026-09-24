@@ -1,6 +1,15 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import type { Genre } from "@/lib/rawg/genres";
 import { updateSearchParams } from "@/lib/url";
 
@@ -13,30 +22,37 @@ export function GameGenreFilter({ genres }: GameGenreFilterProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const selectedGenre = searchParams.get("genre") ?? "";
+  const selectedGenre = searchParams.get("genre") ?? "all";
 
-  function handleChange(value: string) {
+  function handleChange(value: string | null) {
     const params = updateSearchParams(searchParams, {
-      genre: value || null,
+      genre: value === "all" || value === null ? null : value,
       page: null,
     });
 
     router.push(`${pathname}?${params.toString()}`);
   }
 
-  return (
-    <select
-      value={selectedGenre}
-      onChange={(event) => handleChange(event.target.value)}
-      className="rounded-md border px-3 py-2"
-    >
-      <option value="">All genres</option>
+  const selectedGenreName =
+    selectedGenre === "all"
+      ? "All genres"
+      : genres.find((genre) => genre.slug === selectedGenre)?.name;
 
-      {genres.map((genre) => (
-        <option key={genre.id} value={genre.slug}>
-          {genre.name}
-        </option>
-      ))}
-    </select>
+  return (
+    <Select value={selectedGenre} onValueChange={handleChange}>
+      <SelectTrigger className="w-45">
+        <SelectValue>{selectedGenreName}</SelectValue>
+      </SelectTrigger>
+
+      <SelectContent>
+        <SelectItem value="all">All genres</SelectItem>
+
+        {genres.map((genre) => (
+          <SelectItem key={genre.id} value={genre.slug}>
+            {genre.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }

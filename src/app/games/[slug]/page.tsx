@@ -1,12 +1,13 @@
-import { getEnglishDescription } from "@/lib/formatters";
-import { getGame } from "@/lib/rawg/games";
-import Image from "next/image";
-import type { Metadata } from "next";
-import { RawgApiError } from "@/lib/rawg/client";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { GameMedia } from "@/components/games/GameMedia";
 import { GameMediaSkeleton } from "@/components/games/GameMediaSkeleton";
+import { getEnglishDescription } from "@/lib/formatters";
+import { RawgApiError } from "@/lib/rawg/client";
+import { getGame } from "@/lib/rawg/games";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import Image from "next/image";
+import { Suspense } from "react";
+import { Star } from "lucide-react";
 
 type GameDetailsPageProps = {
   params: Promise<{
@@ -30,7 +31,6 @@ export async function generateMetadata({
   params,
 }: GameDetailsPageProps): Promise<Metadata> {
   const { slug } = await params;
-
   const game = await getGameOrNotFound(slug);
 
   return {
@@ -61,12 +61,11 @@ export default async function GameDetailsPage({
   params,
 }: GameDetailsPageProps) {
   const { slug } = await params;
-
   const game = await getGameOrNotFound(slug);
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
-      <h1 className="text-4xl font-bold">{game.name}</h1>
+      <h1 className="text-4xl font-bold tracking-tight">{game.name}</h1>
 
       {game.background_image && (
         <Image
@@ -80,8 +79,11 @@ export default async function GameDetailsPage({
         />
       )}
 
-      <div className="mt-6 flex gap-6 text-sm text-gray-600">
-        <span>⭐ {game.rating}</span>
+      <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+        <span className="flex items-center gap-1 font-medium text-foreground">
+          <Star className="size-4 fill-current" />
+          {game.rating.toFixed(2)}
+        </span>
 
         {game.metacritic !== null && <span>Metacritic: {game.metacritic}</span>}
 
@@ -94,25 +96,25 @@ export default async function GameDetailsPage({
         {game.genres.map((genre) => (
           <span
             key={genre.id}
-            className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+            className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground"
           >
             {genre.name}
           </span>
         ))}
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-3 flex flex-wrap gap-2">
         {game.platforms.map(({ platform }) => (
           <span
             key={platform.id}
-            className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+            className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground"
           >
             {platform.name}
           </span>
         ))}
       </div>
 
-      <p className="mt-8 whitespace-pre-line text-gray-700">
+      <p className="mt-8 leading-7 text-muted-foreground">
         {getEnglishDescription(game.description_raw)}
       </p>
 
@@ -120,11 +122,11 @@ export default async function GameDetailsPage({
         <GameMedia gameId={game.id} />
       </Suspense>
 
-      <div className="mt-10 grid gap-8 sm:grid-cols-2">
+      <div className="mt-10 grid gap-8 border-t pt-8 sm:grid-cols-2">
         <section>
           <h2 className="text-xl font-semibold">Developers</h2>
 
-          <ul className="mt-3 space-y-1 text-gray-700">
+          <ul className="mt-3 space-y-1 text-muted-foreground">
             {game.developers.map((developer) => (
               <li key={developer.id}>{developer.name}</li>
             ))}
@@ -134,7 +136,7 @@ export default async function GameDetailsPage({
         <section>
           <h2 className="text-xl font-semibold">Publishers</h2>
 
-          <ul className="mt-3 space-y-1 text-gray-700">
+          <ul className="mt-3 space-y-1 text-muted-foreground">
             {game.publishers.map((publisher) => (
               <li key={publisher.id}>{publisher.name}</li>
             ))}
@@ -143,14 +145,14 @@ export default async function GameDetailsPage({
       </div>
 
       {game.website && (
-        <div className="mt-10">
+        <div className="mt-10 border-t pt-8">
           <h2 className="text-xl font-semibold">Official Website</h2>
 
           <a
             href={game.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-block text-blue-600 hover:underline"
+            className="mt-2 inline-block text-primary hover:underline"
           >
             Visit official website
           </a>

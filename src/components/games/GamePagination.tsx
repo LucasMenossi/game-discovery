@@ -1,6 +1,9 @@
 "use client";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
 import { updateSearchParams } from "@/lib/url";
 
 type GamePaginationProps = {
@@ -28,28 +31,33 @@ export function GamePagination({
   const canGoNext = currentPage < totalPages;
 
   return (
-    <nav className="mt-8 flex items-center justify-center gap-4">
-      <button
+    <nav
+      aria-label="Pagination"
+      className="mt-10 flex items-center justify-center gap-4"
+    >
+      <Button
         type="button"
+        variant="outline"
         disabled={!canGoPrevious}
         onClick={() => goToPage(currentPage - 1)}
-        className="rounded-md border px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
       >
+        <ChevronLeft />
         Previous
-      </button>
+      </Button>
 
-      <span className="text-sm">
+      <span className="min-w-24 text-center text-sm text-muted-foreground">
         Page {currentPage} of {totalPages}
       </span>
 
-      <button
+      <Button
         type="button"
+        variant="outline"
         disabled={!canGoNext}
         onClick={() => goToPage(currentPage + 1)}
-        className="rounded-md border px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
       >
         Next
-      </button>
+        <ChevronRight />
+      </Button>
     </nav>
   );
 }

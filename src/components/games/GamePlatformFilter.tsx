@@ -1,7 +1,17 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import type { Platform } from "@/lib/rawg/platforms";
+
 import { updateSearchParams } from "@/lib/url";
 
 type GamePlatformFilterProps = {
@@ -13,30 +23,38 @@ export function GamePlatformFilter({ platforms }: GamePlatformFilterProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const selectedPlatform = searchParams.get("platform") ?? "";
+  const selectedPlatform = searchParams.get("platform") ?? "all";
 
-  function handleChange(value: string) {
+  function handleChange(value: string | null) {
     const params = updateSearchParams(searchParams, {
-      platform: value || null,
+      platform: value === "all" || value === null ? null : value,
       page: null,
     });
 
     router.push(`${pathname}?${params.toString()}`);
   }
 
-  return (
-    <select
-      value={selectedPlatform}
-      onChange={(event) => handleChange(event.target.value)}
-      className="rounded-md border px-3 py-2"
-    >
-      <option value="">All platforms</option>
+  const selectedPlatformName =
+    selectedPlatform === "all"
+      ? "All platforms"
+      : platforms.find((platform) => String(platform.id) === selectedPlatform)
+          ?.name;
 
-      {platforms.map((platform) => (
-        <option key={platform.id} value={platform.id}>
-          {platform.name}
-        </option>
-      ))}
-    </select>
+  return (
+    <Select value={selectedPlatform} onValueChange={handleChange}>
+      <SelectTrigger className="w-45">
+        <SelectValue>{selectedPlatformName}</SelectValue>
+      </SelectTrigger>
+
+      <SelectContent>
+        <SelectItem value="all">All platforms</SelectItem>
+
+        {platforms.map((platform) => (
+          <SelectItem key={platform.id} value={String(platform.id)}>
+            {platform.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }

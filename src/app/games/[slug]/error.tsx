@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+
 type GameDetailsErrorProps = {
   reset: () => void;
 };
@@ -10,15 +12,13 @@ export default function GameDetailsError({ reset }: GameDetailsErrorProps) {
       <div className="flex min-h-100 flex-col items-center justify-center text-center">
         <h1 className="text-2xl font-bold">Something went wrong</h1>
 
-        <p className="mt-2 text-gray-600">We couldn&apos;t load this game.</p>
+        <p className="mt-2 text-muted-foreground">
+          We couldn&apos;t load this game. Please try again.
+        </p>
 
-        <button
-          type="button"
-          onClick={reset}
-          className="mt-6 rounded-md bg-black px-4 py-2 text-white"
-        >
+        <Button type="button" className="mt-6" onClick={reset}>
           Try again
-        </button>
+        </Button>
       </div>
     </main>
   );

@@ -1,10 +1,19 @@
 "use client";
 
-import { updateSearchParams } from "@/lib/url";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { updateSearchParams } from "@/lib/url";
+
 const sortOptions = [
-  { value: "", label: "Default" },
+  { value: "default", label: "Default Sorting" },
   { value: "-rating", label: "Rating: High to Low" },
   { value: "rating", label: "Rating: Low to High" },
   { value: "-metacritic", label: "Metacritic: High to Low" },
@@ -20,32 +29,32 @@ export function GameSort() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const sort = searchParams.get("sort") ?? "";
+  const sort = searchParams.get("sort") ?? "default";
 
-  function handleChange(value: string) {
+  function handleChange(value: string | null) {
     const params = updateSearchParams(searchParams, {
-      sort: value || null,
+      sort: value === "default" || value === null ? null : value,
       page: null,
     });
 
     router.push(`${pathname}?${params.toString()}`);
   }
 
-  return (
-    <label className="flex items-center gap-2">
-      <span className="text-sm font-medium">Sort by</span>
+  const selectedOption = sortOptions.find((option) => option.value === sort);
 
-      <select
-        value={sort}
-        onChange={(event) => handleChange(event.target.value)}
-        className="rounded-md border px-3 py-2"
-      >
+  return (
+    <Select value={sort} onValueChange={handleChange}>
+      <SelectTrigger className="w-55">
+        <SelectValue>{selectedOption?.label}</SelectValue>
+      </SelectTrigger>
+
+      <SelectContent>
         {sortOptions.map((option) => (
-          <option key={option.value} value={option.value}>
+          <SelectItem key={option.value} value={option.value}>
             {option.label}
-          </option>
+          </SelectItem>
         ))}
-      </select>
-    </label>
+      </SelectContent>
+    </Select>
   );
 }
