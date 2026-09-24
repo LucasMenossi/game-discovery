@@ -43,7 +43,9 @@ export async function generateMetadata({
 
   const search = params.search?.trim();
 
-  const title = search ? `${search} — Games` : "Games";
+  const title = search
+    ? `${search} — Games | Game Discovery`
+    : "Games | Game Discovery";
 
   const description = search
     ? `Discover games matching "${search}".`
@@ -52,11 +54,9 @@ export async function generateMetadata({
   return {
     title,
     description,
-
     alternates: {
       canonical: "/games",
     },
-
     openGraph: {
       title,
       description,

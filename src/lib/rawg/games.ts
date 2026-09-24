@@ -28,6 +28,17 @@ type GamesResponse = {
   results: Game[];
 };
 
+export type GameDetails = {
+  id: number;
+  slug: string;
+  name: string;
+  description_raw: string;
+  released: string | null;
+  background_image: string | null;
+  rating: number;
+  metacritic: number | null;
+};
+
 export const GAMES_PAGE_SIZE = 10;
 
 export function getGames(params: GetGamesParams = {}) {
@@ -37,6 +48,16 @@ export function getGames(params: GetGamesParams = {}) {
       page_size: GAMES_PAGE_SIZE,
       ...params,
     },
+    {
+      revalidate: 300,
+    },
+  );
+}
+
+export function getGame(slug: string) {
+  return rawgFetch<GameDetails>(
+    `/games/${slug}`,
+    {},
     {
       revalidate: 300,
     },
