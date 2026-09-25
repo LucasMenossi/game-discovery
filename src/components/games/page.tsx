@@ -71,15 +71,11 @@ export default async function GamesPage({ searchParams }: GamesPageProps) {
 
   const [genres, platforms] = await Promise.all([getGenres(), getPlatforms()]);
 
-  const requestedPlatform = params.platform;
-
-  const validPlatform =
-    requestedPlatform &&
-    platforms.results.some(
-      (platform) => String(platform.id) === requestedPlatform,
-    )
-      ? requestedPlatform
-      : undefined;
+  const validPlatform = platforms.results.some(
+    (platform) => String(platform.id) === params.platform,
+  )
+    ? params.platform
+    : undefined;
 
   const data = await getGames({
     search: params.search,
@@ -114,7 +110,6 @@ export default async function GamesPage({ searchParams }: GamesPageProps) {
           items={[{ label: "Home", href: "/" }, { label: "Games" }]}
         />
       </div>
-
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Discover games</h1>
 

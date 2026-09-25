@@ -37,8 +37,8 @@ export function GamesView({ games, count, genres, platforms }: GamesViewProps) {
 
       {games.length > 0 ? (
         <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {games.map((game) => (
-            <GameCard key={game.id} game={game} />
+          {games.map((game, index) => (
+            <GameCard key={game.id} game={game} preload={index === 0} />
           ))}
         </section>
       ) : (

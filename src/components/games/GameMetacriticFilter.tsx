@@ -23,7 +23,12 @@ export function GameMetacriticFilter() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const value = searchParams.get("metacritic") ?? "all";
+  const requestedValue = searchParams.get("metacritic");
+  const value =
+    requestedValue &&
+    metacriticOptions.some((option) => option.value === requestedValue)
+      ? requestedValue
+      : "all";
 
   function handleChange(nextValue: string | null) {
     if (!nextValue) return;

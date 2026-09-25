@@ -23,7 +23,11 @@ export function GameDateFilter() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const value = searchParams.get("dates") ?? "all";
+  const requestedValue = searchParams.get("dates");
+  const value =
+    requestedValue && dateOptions.some((option) => option.value === requestedValue)
+      ? requestedValue
+      : "all";
 
   function handleChange(nextValue: string | null) {
     if (!nextValue) return;

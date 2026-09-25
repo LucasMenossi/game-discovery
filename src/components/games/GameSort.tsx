@@ -31,7 +31,11 @@ export function GameSort() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const sort = searchParams.get("sort") ?? "default";
+  const requestedSort = searchParams.get("sort");
+  const sort =
+    requestedSort && sortOptions.some((option) => option.value === requestedSort)
+      ? requestedSort
+      : "default";
 
   function handleChange(value: string | null) {
     const params = updateSearchParams(searchParams, {

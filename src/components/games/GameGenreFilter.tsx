@@ -22,7 +22,11 @@ export function GameGenreFilter({ genres }: GameGenreFilterProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const selectedGenre = searchParams.get("genre") ?? "all";
+  const requestedGenre = searchParams.get("genre");
+  const selectedGenre =
+    requestedGenre && genres.some((genre) => genre.slug === requestedGenre)
+      ? requestedGenre
+      : "all";
 
   function handleChange(value: string | null) {
     const params = updateSearchParams(searchParams, {

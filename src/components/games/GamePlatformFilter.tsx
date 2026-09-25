@@ -23,7 +23,12 @@ export function GamePlatformFilter({ platforms }: GamePlatformFilterProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const selectedPlatform = searchParams.get("platform") ?? "all";
+  const requestedPlatform = searchParams.get("platform");
+  const selectedPlatform =
+    requestedPlatform &&
+    platforms.some((platform) => String(platform.id) === requestedPlatform)
+      ? requestedPlatform
+      : "all";
 
   function handleChange(value: string | null) {
     const params = updateSearchParams(searchParams, {

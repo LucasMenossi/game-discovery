@@ -8,9 +8,10 @@ import type { Game } from "@/lib/rawg/games";
 
 type GameCardProps = {
   game: Game;
+  preload?: boolean;
 };
 
-export function GameCard({ game }: GameCardProps) {
+export function GameCard({ game, preload = false }: GameCardProps) {
   return (
     <Card className="group h-full overflow-hidden p-0 transition duration-200 hover:-translate-y-1 hover:shadow-lg">
       <Link href={`/games/${game.slug}`} className="block h-full">
@@ -20,6 +21,7 @@ export function GameCard({ game }: GameCardProps) {
               src={game.background_image}
               alt={game.name}
               fill
+              preload={preload}
               sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
