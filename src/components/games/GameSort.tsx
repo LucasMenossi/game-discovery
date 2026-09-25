@@ -20,6 +20,8 @@ const sortOptions = [
   { value: "metacritic", label: "Metacritic: Low to High" },
   { value: "-released", label: "Release Date: Newest" },
   { value: "released", label: "Release Date: Oldest" },
+  { value: "-added", label: "Popularity: High to Low" },
+  { value: "added", label: "Popularity: Low to High" },
   { value: "name", label: "Name: A–Z" },
   { value: "-name", label: "Name: Z–A" },
 ];

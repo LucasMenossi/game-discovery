@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 
 import "./globals.css";
 import { Header } from "@/components/Header";
+import { siteUrl } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -17,6 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: siteUrl,
   title: "Game Discovery",
   description: "Discover and explore video games.",
 };

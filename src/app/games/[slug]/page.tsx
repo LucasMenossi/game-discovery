@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RawgApiError } from "@/lib/rawg/client";
 import { getGame } from "@/lib/rawg/games";
 import { getEnglishDescription } from "@/lib/formatters";
+import { siteUrl } from "@/lib/site";
 import { RelatedGamesSkeleton } from "@/components/games/RelatedGamesSkeleton";
 import { RelatedGames } from "@/components/games/RelatedGames";
 
@@ -38,15 +39,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const game = await getGameOrNotFound(slug);
 
+  const description =
+    getEnglishDescription(game.description_raw)[0]?.slice(0, 160) ??
+    `Discover information about ${game.name}.`;
+
   return {
     title: `${game.name} | Game Discovery`,
-    description: `Discover information about ${game.name}.`,
+    description,
     alternates: {
       canonical: `/games/${game.slug}`,
     },
     openGraph: {
       title: `${game.name} | Game Discovery`,
-      description: `Discover information about ${game.name}.`,
+      description,
       url: `/games/${game.slug}`,
       siteName: "Game Discovery",
       type: "website",
@@ -59,6 +64,12 @@ export async function generateMetadata({
           ]
         : undefined,
     },
+    twitter: {
+      card: "summary_large_image",
+      title: `${game.name} | Game Discovery`,
+      description,
+      images: game.background_image ? [game.background_image] : undefined,
+    },
   };
 }
 
@@ -68,16 +79,75 @@ export default async function GameDetailsPage({
   const { slug } = await params;
   const game = await getGameOrNotFound(slug);
 
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Games", href: "/games" },
+    { label: game.name },
+  ];
+
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: breadcrumbItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.label,
+      ...(item.href && {
+        item: new URL(item.href, siteUrl).toString(),
+      }),
+    })),
+  };
+
+  const gameStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    name: game.name,
+    url: new URL(`/games/${game.slug}`, siteUrl).toString(),
+    description: game.description_raw,
+    ...(game.background_image && {
+      image: game.background_image,
+    }),
+    ...(game.released && {
+      datePublished: game.released,
+    }),
+    ...(game.genres.length > 0 && {
+      genre: game.genres.map((genre) => genre.name),
+    }),
+    ...(game.platforms.length > 0 && {
+      gamePlatform: game.platforms.map(({ platform }) => platform.name),
+    }),
+    ...(game.developers.length > 0 && {
+      creator: game.developers.map((developer) => ({
+        "@type": "Organization",
+        name: developer.name,
+      })),
+    }),
+    ...(game.publishers.length > 0 && {
+      publisher: game.publishers.map((publisher) => ({
+        "@type": "Organization",
+        name: publisher.name,
+      })),
+    }),
+  };
+
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(gameStructuredData),
+        }}
+      />
+
       <div className="mb-8">
-        <AppBreadcrumb
-          items={[
-            { label: "Home", href: "/" },
-            { label: "Games", href: "/games" },
-            { label: game.name },
-          ]}
-        />
+        <AppBreadcrumb items={breadcrumbItems} />
       </div>
 
       <h1 className="text-4xl font-bold tracking-tight">{game.name}</h1>
@@ -87,8 +157,8 @@ export default async function GameDetailsPage({
           src={game.background_image}
           alt={game.name}
           className="mt-6 aspect-video w-full rounded-lg object-cover"
-          width={640}
-          height={360}
+          width={1024}
+          height={576}
           sizes="(min-width: 1024px) 1024px, 100vw"
           priority
         />

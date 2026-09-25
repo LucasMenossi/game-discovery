@@ -79,7 +79,6 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
               alt="Game screenshot"
               width={selectedScreenshot.width}
               height={selectedScreenshot.height}
-              priority
               sizes="90vw"
               className="h-auto max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
             />
