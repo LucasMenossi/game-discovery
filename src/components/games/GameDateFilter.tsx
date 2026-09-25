@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { updateSearchParams } from "@/lib/url";
+import { updateSearchParams } from "@/lib/updateSearchParams";
 
 const dateOptions = [
   { value: "all", label: "All release dates" },
@@ -25,7 +25,8 @@ export function GameDateFilter() {
 
   const requestedValue = searchParams.get("dates");
   const value =
-    requestedValue && dateOptions.some((option) => option.value === requestedValue)
+    requestedValue &&
+    dateOptions.some((option) => option.value === requestedValue)
       ? requestedValue
       : "all";
 

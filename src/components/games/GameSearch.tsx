@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 import { Input } from "@/components/ui/input";
-import { updateSearchParams } from "@/lib/url";
+import { updateSearchParams } from "@/lib/updateSearchParams";
 
 export function GameSearch() {
   const router = useRouter();
@@ -53,7 +53,7 @@ export function GameSearch() {
       });
 
       router.push(`/games?${params.toString()}`);
-    }, 400);
+    }, 800);
   }
 
   return (

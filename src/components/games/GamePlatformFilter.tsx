@@ -12,7 +12,7 @@ import {
 
 import type { Platform } from "@/lib/rawg/platforms";
 
-import { updateSearchParams } from "@/lib/url";
+import { updateSearchParams } from "@/lib/updateSearchParams";
 
 type GamePlatformFilterProps = {
   platforms: Platform[];

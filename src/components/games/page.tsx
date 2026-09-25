@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import { GamesView } from "@/components/games/GamesView";
 import { AppBreadcrumb } from "@/components/AppBreadCrumb";
+import { parsePage } from "@/lib/parsePage";
 
 type GamesPageProps = {
   searchParams: Promise<{
@@ -18,20 +19,6 @@ type GamesPageProps = {
     page?: string;
   }>;
 };
-
-function parsePage(value?: string) {
-  if (!value) {
-    return 1;
-  }
-
-  const page = Number(value);
-
-  if (!Number.isInteger(page) || page < 1) {
-    return 1;
-  }
-
-  return page;
-}
 
 export async function generateMetadata({
   searchParams,

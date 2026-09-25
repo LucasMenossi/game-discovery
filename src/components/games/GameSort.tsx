@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { updateSearchParams } from "@/lib/url";
+import { updateSearchParams } from "@/lib/updateSearchParams";
 
 const sortOptions = [
   { value: "default", label: "Default Sorting" },
@@ -33,7 +33,8 @@ export function GameSort() {
 
   const requestedSort = searchParams.get("sort");
   const sort =
-    requestedSort && sortOptions.some((option) => option.value === requestedSort)
+    requestedSort &&
+    sortOptions.some((option) => option.value === requestedSort)
       ? requestedSort
       : "default";
 

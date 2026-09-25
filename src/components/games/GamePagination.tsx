@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { updateSearchParams } from "@/lib/url";
+import { updateSearchParams } from "@/lib/updateSearchParams";
 
 type GamePaginationProps = {
   currentPage: number;

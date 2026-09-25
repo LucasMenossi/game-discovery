@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 
 import type { Genre } from "@/lib/rawg/genres";
-import { updateSearchParams } from "@/lib/url";
+import { updateSearchParams } from "@/lib/updateSearchParams";
 
 type GameGenreFilterProps = {
   genres: Genre[];

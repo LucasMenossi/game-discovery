@@ -10,7 +10,7 @@ import { GameMediaSkeleton } from "@/components/games/GameMediaSkeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RawgApiError } from "@/lib/rawg/client";
 import { getGame } from "@/lib/rawg/games";
-import { getEnglishDescription } from "@/lib/formatters";
+import { getEnglishDescription } from "@/lib/getEnglishDescription";
 import { siteUrl } from "@/lib/site";
 import { RelatedGamesSkeleton } from "@/components/games/RelatedGamesSkeleton";
 import { RelatedGames } from "@/components/games/RelatedGames";
