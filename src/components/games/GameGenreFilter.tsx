@@ -34,7 +34,9 @@ export function GameGenreFilter({ genres }: GameGenreFilterProps) {
       page: null,
     });
 
-    router.push(`${pathname}?${params.toString()}`);
+    const query = params.toString();
+
+    router.push(query ? `${pathname}?${query}` : pathname);
   }
 
   const selectedGenreName =

@@ -22,8 +22,8 @@ const sortOptions = [
   { value: "released", label: "Release Date: Oldest" },
   { value: "-added", label: "Popularity: High to Low" },
   { value: "added", label: "Popularity: Low to High" },
-  { value: "name", label: "Name: A–Z" },
-  { value: "-name", label: "Name: Z–A" },
+  { value: "name", label: "Name: A-Z" },
+  { value: "-name", label: "Name: Z-A" },
 ];
 
 export function GameSort() {
@@ -44,7 +44,9 @@ export function GameSort() {
       page: null,
     });
 
-    router.push(`${pathname}?${params.toString()}`);
+    const query = params.toString();
+
+    router.push(query ? `${pathname}?${query}` : pathname);
   }
 
   const selectedOption = sortOptions.find((option) => option.value === sort);

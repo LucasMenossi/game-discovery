@@ -52,7 +52,9 @@ export function GameSearch() {
         page: null,
       });
 
-      router.push(`/games?${params.toString()}`);
+      const query = params.toString();
+
+      router.push(query ? `/games?${query}` : "/games");
     }, 800);
   }
 
