@@ -46,7 +46,7 @@ export function GameGenreFilter({ genres }: GameGenreFilterProps) {
 
   return (
     <Select value={selectedGenre} onValueChange={handleChange}>
-      <SelectTrigger className="w-45">
+      <SelectTrigger className="w-45" aria-label="Filter by genre">
         <SelectValue>{selectedGenreName}</SelectValue>
       </SelectTrigger>
 

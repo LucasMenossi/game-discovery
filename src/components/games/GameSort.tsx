@@ -53,7 +53,7 @@ export function GameSort() {
 
   return (
     <Select value={sort} onValueChange={handleChange}>
-      <SelectTrigger className="w-55">
+      <SelectTrigger className="w-55" aria-label="Sort games">
         <SelectValue>{selectedOption?.label}</SelectValue>
       </SelectTrigger>
 

@@ -49,7 +49,7 @@ export function GamePlatformFilter({ platforms }: GamePlatformFilterProps) {
 
   return (
     <Select value={selectedPlatform} onValueChange={handleChange}>
-      <SelectTrigger className="w-45">
+      <SelectTrigger className="w-45" aria-label="Filter by platform">
         <SelectValue>{selectedPlatformName}</SelectValue>
       </SelectTrigger>
 

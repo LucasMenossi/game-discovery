@@ -8,7 +8,7 @@ import { AppBreadcrumb } from "@/components/AppBreadCrumb";
 import { GameMedia } from "@/components/games/GameMedia";
 import { GameMediaSkeleton } from "@/components/games/GameMediaSkeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RawgApiError } from "@/lib/rawg/client";
+import { RawgApiError } from "@/lib/rawg/RawgApiError";
 import { getGame } from "@/lib/rawg/games";
 import { getEnglishDescription } from "@/lib/getEnglishDescription";
 import { siteUrl } from "@/lib/site";
