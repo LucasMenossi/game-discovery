@@ -1,0 +1,1 @@
+export { GameMetacriticFilter } from "./GameMetacriticFilter";

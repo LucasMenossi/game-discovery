@@ -1,0 +1,1 @@
+export { GamePagination } from "./GamePagination";

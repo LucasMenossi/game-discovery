@@ -1,0 +1,1 @@
+export { GamePlatformFilter } from "./GamePlatformFilter";
