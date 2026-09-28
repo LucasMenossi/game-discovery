@@ -46,9 +46,10 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
         return;
       }
 
-      const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
+      const focusableElements =
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        );
 
       if (!focusableElements?.length) {
         return;
@@ -79,7 +80,7 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
 
   return (
     <>
-      <section aria-labelledby="screenshots-heading">
+      <section className="mt-10" aria-labelledby="screenshots-heading">
         <h2 id="screenshots-heading" className="mb-4 text-2xl font-semibold">
           Screenshots
         </h2>
