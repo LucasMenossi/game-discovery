@@ -19,13 +19,13 @@ export default async function GenresPage() {
           Explore by genre
         </h1>
         <p className="text-muted-foreground mt-3 max-w-2xl text-lg">
-          Browse games by genre and find something that matches what you like
-          to play.
+          Browse games by genre and find something that matches what you like to
+          play.
         </p>
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {genres.map((genre) => (
+        {genres.map((genre, index) => (
           <Link key={genre.id} href={`/genres/${genre.slug}`} className="group">
             <Card className="relative h-48 overflow-hidden py-0 transition-transform duration-200 group-hover:-translate-y-1">
               <Image
@@ -34,6 +34,7 @@ export default async function GenresPage() {
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
+                preload={index === 0}
               />
 
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />

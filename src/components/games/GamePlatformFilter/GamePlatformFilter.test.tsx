@@ -8,8 +8,14 @@ const pushMock = vi.fn();
 const searchParams = new URLSearchParams();
 
 const platforms = [
-  { id: 4, name: "PC", slug: "pc" },
-  { id: 187, name: "PlayStation 5", slug: "playstation5" },
+  { id: 4, name: "PC", slug: "pc", games_count: 20, image_background: "" },
+  {
+    id: 187,
+    name: "PlayStation 5",
+    slug: "playstation5",
+    games_count: 250,
+    image_background: "",
+  },
 ];
 
 vi.mock("next/navigation", () => ({

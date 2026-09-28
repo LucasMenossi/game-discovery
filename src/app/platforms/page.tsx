@@ -6,7 +6,8 @@ import { getPlatforms } from "@/lib/rawg/platforms";
 
 export const metadata = {
   title: "Platforms | Game Discovery",
-  description: "Explore games by platform and discover your next favorite game.",
+  description:
+    "Explore games by platform and discover your next favorite game.",
 };
 
 export default async function PlatformsPage() {
@@ -25,7 +26,7 @@ export default async function PlatformsPage() {
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {platforms.map((platform) => (
+        {platforms.map((platform, index) => (
           <Link
             key={platform.id}
             href={`/platforms/${platform.slug}`}
@@ -39,6 +40,7 @@ export default async function PlatformsPage() {
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  preload={index === 0}
                 />
               ) : (
                 <div className="absolute inset-0 bg-muted" />

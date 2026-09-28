@@ -15,6 +15,7 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
   function handleOpen(screenshot: GameScreenshot, trigger: HTMLButtonElement) {
@@ -38,6 +39,30 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         handleClose();
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+
+      if (!focusableElements?.length) {
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
       }
     }
 
@@ -82,6 +107,7 @@ export function GameScreenshots({ screenshots }: GameScreenshotsProps) {
 
       {selectedScreenshot && (
         <div
+          ref={dialogRef}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
           role="dialog"
           aria-modal="true"

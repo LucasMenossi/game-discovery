@@ -98,6 +98,35 @@ describe("GameScreenshots", () => {
     expect(closeButton).toHaveFocus();
   });
 
+  it("keeps keyboard focus inside the preview", async () => {
+    const user = userEvent.setup();
+
+    render(<GameScreenshots screenshots={screenshots} />);
+
+    await user.click(screen.getByRole("button", { name: "View screenshot 1" }));
+
+    const dialog = screen.getByRole("dialog", {
+      name: "Screenshot preview",
+    });
+
+    const image = within(dialog).getByAltText("Game screenshot 1");
+
+    fireEvent.load(image);
+
+    const closeButton = await screen.findByRole("button", {
+      name: "Close screenshot preview",
+    });
+
+    closeButton.focus();
+    await user.tab();
+
+    expect(closeButton).toHaveFocus();
+
+    await user.tab({ shift: true });
+
+    expect(closeButton).toHaveFocus();
+  });
+
   it("closes the preview when the close button is clicked", async () => {
     const user = userEvent.setup();
 

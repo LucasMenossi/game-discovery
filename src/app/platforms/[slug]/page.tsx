@@ -1,7 +1,9 @@
+import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+
+import { RawgApiError } from "@/lib/rawg/RawgApiError";
 
 import { GameCard } from "@/components/games/GameCard/GameCard";
 import { buttonVariants } from "@/components/ui/button";
@@ -9,6 +11,18 @@ import { getGames } from "@/lib/rawg/games";
 import { getPlatform, getPlatforms } from "@/lib/rawg/platforms";
 
 const PAGE_SIZE = 20;
+
+async function getPlatformOrNotFound(slug: string) {
+  try {
+    return await getPlatform(slug);
+  } catch (error) {
+    if (error instanceof RawgApiError && error.status === 404) {
+      notFound();
+    }
+
+    throw error;
+  }
+}
 
 type PlatformPageProps = {
   params: Promise<{ slug: string }>;
@@ -18,11 +32,7 @@ export async function generateMetadata({
   params,
 }: PlatformPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const platform = await getPlatform(slug);
-
-  if (!platform) {
-    return { title: "Platform not found | Game Discovery" };
-  }
+  const platform = await getPlatformOrNotFound(slug);
 
   return {
     title: `${platform.name} Games | Game Discovery`,
@@ -49,15 +59,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PlatformPage({
-  params,
-}: PlatformPageProps) {
+export default async function PlatformPage({ params }: PlatformPageProps) {
   const { slug } = await params;
-  const platform = await getPlatform(slug);
-
-  if (!platform) {
-    notFound();
-  }
+  const platform = await getPlatformOrNotFound(slug);
 
   const games = await getGames({
     platforms: String(platform.id),
@@ -97,7 +101,9 @@ export default async function PlatformPage({
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-2xl font-bold">Popular {platform.name} games</h2>
+            <h2 className="text-2xl font-bold">
+              Popular {platform.name} games
+            </h2>
             <p className="mt-1 text-muted-foreground">
               Highly rated games available on this platform.
             </p>
@@ -113,8 +119,8 @@ export default async function PlatformPage({
 
         {games.results.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {games.results.map((game) => (
-              <GameCard key={game.id} game={game} />
+            {games.results.map((game, index) => (
+              <GameCard key={game.id} game={game} preload={index === 0} />
             ))}
           </div>
         ) : (

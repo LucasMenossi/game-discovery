@@ -1,5 +1,3 @@
-"use client";
-
 import { GameEmptyState } from "@/components/games/GameEmptyState";
 import { GameGenreFilter } from "@/components/games/GameGenreFilter";
 import { GamePlatformFilter } from "@/components/games/GamePlatformFilter";

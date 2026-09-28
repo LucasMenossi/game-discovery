@@ -1,7 +1,9 @@
+import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+
+import { RawgApiError } from "@/lib/rawg/RawgApiError";
 
 import { GameCard } from "@/components/games/GameCard/GameCard";
 import { buttonVariants } from "@/components/ui/button";
@@ -10,17 +12,27 @@ import { getGenre, getGenres } from "@/lib/rawg/genres";
 
 const PAGE_SIZE = 20;
 
+async function getGenreOrNotFound(slug: string) {
+  try {
+    return await getGenre(slug);
+  } catch (error) {
+    if (error instanceof RawgApiError && error.status === 404) {
+      notFound();
+    }
+
+    throw error;
+  }
+}
+
 type GenrePageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateMetadata({ params }: GenrePageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: GenrePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const genre = await getGenre(slug);
-
-  if (!genre) {
-    return { title: "Genre not found | Game Discovery" };
-  }
+  const genre = await getGenreOrNotFound(slug);
 
   return {
     title: `${genre.name} Games | Game Discovery`,
@@ -47,11 +59,7 @@ export async function generateStaticParams() {
 
 export default async function GenrePage({ params }: GenrePageProps) {
   const { slug } = await params;
-  const genre = await getGenre(slug);
-
-  if (!genre) {
-    notFound();
-  }
+  const genre = await getGenreOrNotFound(slug);
 
   const games = await getGames({
     genres: genre.slug,
@@ -80,7 +88,8 @@ export default async function GenrePage({ params }: GenrePageProps) {
             {genre.name}
           </h1>
           <p className="mt-4 max-w-2xl text-white/80">
-            Explore {genre.games_count.toLocaleString()} games in the {genre.name.toLowerCase()} genre.
+            Explore {genre.games_count.toLocaleString()} games in the{" "}
+            {genre.name.toLowerCase()} genre.
           </p>
         </div>
       </section>
@@ -104,8 +113,8 @@ export default async function GenrePage({ params }: GenrePageProps) {
 
         {games.results.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {games.results.map((game) => (
-              <GameCard key={game.id} game={game} />
+            {games.results.map((game, index) => (
+              <GameCard key={game.id} game={game} preload={index === 0} />
             ))}
           </div>
         ) : (

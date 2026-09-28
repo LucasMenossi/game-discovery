@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 
@@ -13,11 +13,15 @@ const genres = [
     id: 4,
     name: "Action",
     slug: "action",
+    games_count: 20,
+    image_background: "",
   },
   {
     id: 3,
     name: "Adventure",
     slug: "adventure",
+    games_count: 200,
+    image_background: "",
   },
 ];
 
