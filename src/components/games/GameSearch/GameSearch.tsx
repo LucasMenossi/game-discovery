@@ -2,7 +2,7 @@
 
 import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { updateSearchParams } from "@/lib/updateSearchParams";
@@ -11,19 +11,20 @@ export function GameSearch() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   const urlSearch = searchParams.get("search") ?? "";
 
+  const [search, setSearch] = useState(urlSearch);
+
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingSearchRef = useRef<string | null>(null);
+
   useEffect(() => {
-    if (inputRef.current && inputRef.current.value !== urlSearch) {
-      inputRef.current.value = urlSearch;
+    if (pendingSearchRef.current === null) {
+      setSearch(urlSearch);
     }
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
+    if (pendingSearchRef.current === urlSearch) {
+      pendingSearchRef.current = null;
     }
   }, [urlSearch]);
 
@@ -38,6 +39,9 @@ export function GameSearch() {
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
 
+    setSearch(value);
+    pendingSearchRef.current = value;
+
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -45,10 +49,10 @@ export function GameSearch() {
     timeoutRef.current = setTimeout(() => {
       timeoutRef.current = null;
 
-      const search = value.trim();
+      const nextSearch = value.trim();
 
       const params = updateSearchParams(searchParams, {
-        search: search || null,
+        search: nextSearch || null,
         page: null,
       });
 
@@ -63,10 +67,10 @@ export function GameSearch() {
       <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
 
       <Input
-        ref={inputRef}
         type="search"
         placeholder="Search games..."
         className="h-11 pl-9"
+        value={search}
         onChange={handleChange}
         aria-label="Search games"
       />
