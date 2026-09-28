@@ -4,7 +4,7 @@ import { GameEmptyState } from "@/components/games/GameEmptyState";
 import { GameGenreFilter } from "@/components/games/GameGenreFilter";
 import { GamePlatformFilter } from "@/components/games/GamePlatformFilter";
 import { GameSort } from "@/components/games/GameSort";
-import { GameCard } from "@/components/games/GameCard";
+import { GameCard } from "@/components/games/GameCard/GameCard";
 import type { Genre } from "@/lib/rawg/genres";
 import type { Platform } from "@/lib/rawg/platforms";
 import type { Game } from "@/lib/rawg/games";

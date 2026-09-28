@@ -1,0 +1,1 @@
+export { GameTrailer } from "./GameTrailer";

@@ -1,6 +1,6 @@
 import { getGameSeries } from "@/lib/rawg/games";
 
-import { GameCard } from "./GameCard";
+import { GameCard } from "../GameCard/GameCard";
 
 type RelatedGamesProps = {
   gameId: number;

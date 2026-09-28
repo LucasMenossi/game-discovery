@@ -38,8 +38,11 @@ export function GameCard({ game, preload = false }: GameCardProps) {
           </CardTitle>
 
           <div className="mt-3 flex items-center gap-2 text-sm">
-            <span className="flex items-center gap-1 rounded-md bg-muted px-2 py-1 font-medium">
-              <Star className="size-3.5 fill-current" />
+            <span
+              aria-label={`Rating ${game.rating.toFixed(2)} out of 5`}
+              className="flex items-center gap-1 rounded-md bg-muted px-2 py-1 font-medium"
+            >
+              <Star aria-hidden="true" className="size-3.5 fill-current" />
               {game.rating.toFixed(2)}
             </span>
 

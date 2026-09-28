@@ -14,6 +14,7 @@ import { getEnglishDescription } from "@/lib/getEnglishDescription";
 import { siteUrl } from "@/lib/site";
 import { RelatedGamesSkeleton } from "@/components/games/RelatedGamesSkeleton";
 import { RelatedGames } from "@/components/games/RelatedGames";
+import { GameDescription } from "@/components/games/GameDescription";
 
 type GameDetailsPageProps = {
   params: Promise<{
@@ -220,11 +221,7 @@ export default async function GameDetailsPage({
         ))}
       </div>
 
-      <div className="mt-8 space-y-4 leading-8 text-muted-foreground">
-        {getEnglishDescription(game.description_raw).map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
-      </div>
+      <GameDescription description={game.description_raw} />
 
       {game.tags.length > 0 && (
         <section className="mt-8">

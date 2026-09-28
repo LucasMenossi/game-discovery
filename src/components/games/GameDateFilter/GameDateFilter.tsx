@@ -43,7 +43,7 @@ export function GameDateFilter() {
 
   return (
     <Select value={value} onValueChange={handleChange}>
-      <SelectTrigger className="w-45">
+      <SelectTrigger className="w-45" aria-label="Filter by release date">
         <SelectValue>
           {value === "all"
             ? "All release dates"

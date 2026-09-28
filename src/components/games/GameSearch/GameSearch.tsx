@@ -68,6 +68,7 @@ export function GameSearch() {
         placeholder="Search games..."
         className="h-11 pl-9"
         onChange={handleChange}
+        aria-label="Search games"
       />
     </div>
   );

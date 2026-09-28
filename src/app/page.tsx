@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { GameCard } from "@/components/games/GameCard";
+import { GameCard } from "@/components/games/GameCard/GameCard";
 
 import { getGames } from "@/lib/rawg/games";
 import { getGenres } from "@/lib/rawg/genres";
@@ -59,6 +59,7 @@ export default async function HomePage() {
                 type="search"
                 placeholder="Search for a game..."
                 className="h-11 pl-9"
+                aria-label="Search for a game"
               />
             </div>
 

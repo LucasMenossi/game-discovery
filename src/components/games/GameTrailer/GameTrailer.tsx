@@ -14,8 +14,10 @@ export function GameTrailer({ movie }: GameTrailerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section className="mt-10">
-      <h2 className="text-xl font-semibold">{movie.name}</h2>
+    <section className="mt-10" aria-labelledby="trailer-heading">
+      <h2 id="trailer-heading" className="text-xl font-semibold">
+        {movie.name}
+      </h2>
 
       <div className="relative mt-4 aspect-video overflow-hidden rounded-lg bg-black">
         {isPlaying ? (
@@ -24,6 +26,7 @@ export function GameTrailer({ movie }: GameTrailerProps) {
             controls
             autoPlay
             poster={movie.preview}
+            aria-label={`${movie.name} trailer`}
             className="size-full object-contain"
           />
         ) : (

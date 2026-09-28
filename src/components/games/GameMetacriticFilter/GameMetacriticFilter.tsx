@@ -43,7 +43,7 @@ export function GameMetacriticFilter() {
 
   return (
     <Select value={value} onValueChange={handleChange}>
-      <SelectTrigger className="w-45">
+      <SelectTrigger className="w-45" aria-label="Filter by Metacritic score">
         <SelectValue>
           {value === "all"
             ? "All Metacritic scores"
