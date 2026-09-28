@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Game Discovery
+
+A game discovery platform built with **Next.js** and the **RAWG Video Games Database API**.
+
+The project focuses on building a production-like frontend while demonstrating Next.js App Router, server/client components, URL state, API integration, caching, SEO, responsive UI, and testing.
+
+## Features
+
+- Game search and filtering
+- Genre, platform, release date, rating, and sorting filters
+- URL-synchronized filters and pagination
+- Game detail pages with descriptions, screenshots, trailers, and related games
+- Dynamic SEO metadata and Open Graph/Twitter metadata
+- Responsive UI
+- Loading, error, and not-found states
+- RAWG data attribution
+
+## Tech Stack
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Vitest
+- React Testing Library
+- Playwright
+- RAWG API
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env.local` file:
+
+```env
+RAWG_API_KEY=your_rawg_api_key
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run unit and component tests:
 
-## Learn More
+```bash
+npm test
+```
 
-To learn more about Next.js, take a look at the following resources:
+Run end-to-end tests:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run test:e2e
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
+The application uses the **Next.js App Router** with server-side data fetching for RAWG API requests. Client Components are used only where interactivity is required, such as search, filters, pagination, and media interactions.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Filters and pagination are stored in the URL, making catalog views shareable and preserving state across navigation.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+RAWG requests use Next.js caching and revalidation with different lifetimes depending on how frequently the data changes.
+
+## API Attribution
+
+Game data and images are provided by **RAWG**.
+
+[RAWG](https://rawg.io/)
+
+## License
+
+This project is for educational and portfolio purposes.

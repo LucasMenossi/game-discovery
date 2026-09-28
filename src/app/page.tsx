@@ -132,7 +132,7 @@ export default async function HomePage() {
           {genres.results.slice(0, 12).map((genre) => (
             <Link
               key={genre.id}
-              href={`/games?genre=${encodeURIComponent(genre.name.toLowerCase())}`}
+              href={`/games?genre=${encodeURIComponent(genre.slug)}`}
             >
               <Card className="h-full transition-colors hover:bg-muted/50">
                 <CardContent className="flex h-full items-center justify-center p-5 text-center">

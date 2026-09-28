@@ -167,7 +167,7 @@ export default async function GameDetailsPage({
 
       <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
         <span className="flex items-center gap-1 font-medium text-foreground">
-          <Star className="size-4 fill-current" />
+          <Star className="size-4 fill-current" aria-hidden="true" />
           {game.rating.toFixed(2)}
         </span>
 
