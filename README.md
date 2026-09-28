@@ -71,6 +71,11 @@ Filters and pagination are stored in the URL, making catalog views shareable and
 
 RAWG requests use Next.js caching and revalidation with different lifetimes depending on how frequently the data changes.
 
+### Cache strategy
+
+- **Dynamic data: 5 minutes** — game lists, search results, game details, screenshots, trailers, and related games can change more frequently and should not remain stale for a long period.
+- **Stable data: 1 hour** — genres and platforms change much less frequently, so a longer revalidation window avoids unnecessary requests while keeping the data reasonably fresh.
+
 ## API Attribution
 
 Game data and images are provided by **RAWG**.

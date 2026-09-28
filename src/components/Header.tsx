@@ -21,6 +21,20 @@ export function Header() {
             Games
           </Link>
 
+          <Link
+            href="/genres"
+            className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            Genres
+          </Link>
+
+          <Link
+            href="/platforms"
+            className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            Platforms
+          </Link>
+
           <ThemeToggle />
         </nav>
       </div>

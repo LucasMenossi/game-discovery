@@ -4,6 +4,8 @@ export type Genre = {
   id: number;
   slug: string;
   name: string;
+  games_count: number;
+  image_background: string;
 };
 
 type GenresResponse = {
@@ -17,6 +19,16 @@ export function getGenres() {
     {
       page_size: 50,
     },
+    {
+      revalidate: RAWG_CACHE.stable,
+    },
+  );
+}
+
+export function getGenre(slug: string) {
+  return rawgFetch<Genre>(
+    `/genres/${encodeURIComponent(slug)}`,
+    {},
     {
       revalidate: RAWG_CACHE.stable,
     },
