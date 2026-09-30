@@ -18,6 +18,7 @@ export function ThemeToggle() {
       size="icon"
       aria-label="Toggle theme"
       onClick={toggleTheme}
+      className={"cursor-pointer"}
     >
       <Sun className="size-4 dark:hidden" />
       <Moon className="hidden size-4 dark:block" />

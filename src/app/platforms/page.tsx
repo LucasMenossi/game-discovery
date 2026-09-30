@@ -19,7 +19,7 @@ export default async function PlatformsPage() {
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Explore by platform
         </h1>
-        <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
+        <p className="mt-3 max-w-3xl text-lg text-muted-foreground">
           Browse games by platform and find something to play on your favorite
           system.
         </p>

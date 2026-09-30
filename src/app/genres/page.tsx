@@ -18,7 +18,7 @@ export default async function GenresPage() {
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Explore by genre
         </h1>
-        <p className="text-muted-foreground mt-3 max-w-2xl text-lg">
+        <p className="mt-3 max-w-3xl text-lg text-muted-foreground">
           Browse games by genre and find something that matches what you like to
           play.
         </p>
